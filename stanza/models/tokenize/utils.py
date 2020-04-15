@@ -93,7 +93,7 @@ def output_predictions(output_file, trainer, data_generator, vocab, mwt_dict, ma
         N = len(batch[3][0])
         if N <= eval_limit:
             pred = np.argmax(trainer.predict(batch), axis=2)
-            print(pred)
+            print("Hi "+str(pred))
         else:
             idx = [0] * len(batchparas)
             Ns = [p[3] for p in batchparas]
@@ -103,7 +103,7 @@ def output_predictions(output_file, trainer, data_generator, vocab, mwt_dict, ma
                 en = max(ens)
                 batch1 = batch[0][:, :en], batch[1][:, :en], batch[2][:, :en], [x[:en] for x in batch[3]]
                 pred1 = np.argmax(trainer.predict(batch1), axis=2)
-                print(pred1)
+                print("p1 "+str(pred1))
 
                 for j in range(len(batchparas)):
                     sentbreaks = np.where((pred1[j] == 2) + (pred1[j] == 4))[0]

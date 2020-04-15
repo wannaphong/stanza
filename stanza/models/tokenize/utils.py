@@ -97,7 +97,7 @@ def output_predictions(output_file, trainer, data_generator, vocab, mwt_dict, ma
             pred = np.argmax(a, axis=2)
             print("555 "+str(a))
             print("Hi "+str(pred))
-            list_prob.append(pred)
+            list_prob.append(a)
         else:
             idx = [0] * len(batchparas)
             Ns = [p[3] for p in batchparas]

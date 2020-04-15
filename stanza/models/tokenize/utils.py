@@ -64,7 +64,7 @@ def find_token(token, text):
     m = re.search('\s*'.join(['\s' if re.match('\s', x) else re.escape(x) for x in token]), text)
     return m.start(), m.group()
 
-def output_predictions(output_file, trainer, data_generator, vocab, mwt_dict, max_seqlen=1000, orig_text=None, no_ssplit=False):
+def output_predictions(output_file, trainer, data_generator, vocab, mwt_dict, max_seqlen=1000, orig_text=None, no_ssplit=False,prob=False):
     paragraphs = []
     for i, p in enumerate(data_generator.sentences):
         start = 0 if i == 0 else paragraphs[-1][2]
@@ -82,6 +82,7 @@ def output_predictions(output_file, trainer, data_generator, vocab, mwt_dict, ma
     batches = int((len(paragraphs) + batch_size - 1) / batch_size)
 
     t = 0
+    list_prob = []
     for i in range(batches):
         batchparas = paragraphs[i * batch_size : (i + 1) * batch_size]
         offsets = [x[1] for x in batchparas]
@@ -96,6 +97,7 @@ def output_predictions(output_file, trainer, data_generator, vocab, mwt_dict, ma
             pred = np.argmax(a, axis=2)
             print("555 "+str(a))
             print("Hi "+str(pred))
+            list_prob.append(pred)
         else:
             idx = [0] * len(batchparas)
             Ns = [p[3] for p in batchparas]
@@ -196,7 +198,8 @@ def output_predictions(output_file, trainer, data_generator, vocab, mwt_dict, ma
         if len(current_sent):
             doc.append(process_sentence(current_sent, mwt_dict))
     if output_file: CoNLL.dict2conll(doc, output_file)
-    return oov_count, offset, all_preds, doc
+    if prob:
+        return oov_count, offset, all_preds, doc, list_prob
 
 def eval_model(args, trainer, batches, vocab, mwt_dict):
     oov_count, N, all_preds, doc = output_predictions(args['conll_file'], trainer, batches, vocab, mwt_dict, args['max_seqlen'])

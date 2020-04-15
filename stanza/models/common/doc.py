@@ -30,7 +30,7 @@ class Document:
     """ A document class that stores attributes of a document and carries a list of sentences.
     """
 
-    def __init__(self, sentences, text=None):
+    def __init__(self, sentences, text=None, prob =None):
         """ Construct a document given a list of sentences in the form of lists of CoNLL-U dicts.
 
         Args:
@@ -43,9 +43,13 @@ class Document:
         self._num_words = 0
 
         self.text = text
+        self._prob = prob
         self._process_sentences(sentences)
         self._ents = []
-
+    @property
+    def prob(self):
+        """ Access the prob text for this document. """
+        return [(i,j) for i,j in zip(self._text,self._prob[0][0])]
     @property
     def text(self):
         """ Access the raw text for this document. """

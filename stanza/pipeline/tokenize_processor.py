@@ -85,8 +85,8 @@ class TokenizeProcessor(UDProcessor):
                     document = '\n\n'.join(document)
                 batches = DataLoader(self.config, input_text=document, vocab=self.vocab, evaluation=True)
             # get dict data
-            _, _, _, document = output_predictions(None, self.trainer, batches, self.vocab, None,
+            _, _, _, document,prob = output_predictions(None, self.trainer, batches, self.vocab, None,
                                    self.config.get('max_seqlen', TokenizeProcessor.MAX_SEQ_LENGTH_DEFAULT),
                                    orig_text = document,
-                                   no_ssplit=self.config.get('no_ssplit', False))
-        return doc.Document(document, raw_text)
+                                   no_ssplit=self.config.get('no_ssplit', False),prob=True)
+        return doc.Document(document, raw_text, prob=prob)

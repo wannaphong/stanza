@@ -103,6 +103,7 @@ def output_predictions(output_file, trainer, data_generator, vocab, mwt_dict, ma
                 en = max(ens)
                 batch1 = batch[0][:, :en], batch[1][:, :en], batch[2][:, :en], [x[:en] for x in batch[3]]
                 pred1 = np.argmax(trainer.predict(batch1), axis=2)
+                print(pred1)
 
                 for j in range(len(batchparas)):
                     sentbreaks = np.where((pred1[j] == 2) + (pred1[j] == 4))[0]

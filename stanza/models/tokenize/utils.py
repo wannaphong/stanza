@@ -134,6 +134,7 @@ def output_predictions(output_file, trainer, data_generator, vocab, mwt_dict, ma
 
     text = orig_text
     char_offset = 0
+    print(all_preds)
 
     for j in range(len(paragraphs)):
         raw = all_raw[j]

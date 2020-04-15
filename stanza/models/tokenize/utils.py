@@ -199,7 +199,8 @@ def output_predictions(output_file, trainer, data_generator, vocab, mwt_dict, ma
             doc.append(process_sentence(current_sent, mwt_dict))
     if output_file: CoNLL.dict2conll(doc, output_file)
     if prob:
-        return oov_count, offset, all_preds, doc, list_prob
+        return oov_count, offset, all_preds, doc, list(list_prob)
+    return oov_count, offset, all_preds, doc
 
 def eval_model(args, trainer, batches, vocab, mwt_dict):
     oov_count, N, all_preds, doc = output_predictions(args['conll_file'], trainer, batches, vocab, mwt_dict, args['max_seqlen'])

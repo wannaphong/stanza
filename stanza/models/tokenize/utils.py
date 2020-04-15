@@ -93,6 +93,7 @@ def output_predictions(output_file, trainer, data_generator, vocab, mwt_dict, ma
         N = len(batch[3][0])
         if N <= eval_limit:
             pred = np.argmax(trainer.predict(batch), axis=2)
+            print(pred)
         else:
             idx = [0] * len(batchparas)
             Ns = [p[3] for p in batchparas]
@@ -118,6 +119,7 @@ def output_predictions(output_file, trainer, data_generator, vocab, mwt_dict, ma
                 batch = data_generator.next(eval_offsets=[x+y for x, y in zip(idx, offsets)])
 
             pred = [np.concatenate(p, 0) for p in pred]
+            print(pred)
 
         for j, p in enumerate(batchparas):
             len1 = len([1 for x in raw[j] if x != '<PAD>'])
@@ -134,7 +136,7 @@ def output_predictions(output_file, trainer, data_generator, vocab, mwt_dict, ma
 
     text = orig_text
     char_offset = 0
-    print(all_preds)
+    
 
     for j in range(len(paragraphs)):
         raw = all_raw[j]

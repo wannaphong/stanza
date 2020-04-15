@@ -93,6 +93,7 @@ def output_predictions(output_file, trainer, data_generator, vocab, mwt_dict, ma
         N = len(batch[3][0])
         if N <= eval_limit:
             pred = np.argmax(trainer.predict(batch), axis=2)
+            print("555 "+str(trainer.predict(batch)))
             print("Hi "+str(pred))
         else:
             idx = [0] * len(batchparas)
